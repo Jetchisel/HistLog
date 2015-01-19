@@ -11,8 +11,32 @@
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.      #
 #: Options         : NONE                                                                     #
 #: Home Page       : NONE                                                                     #
-#: ExtComm         : ed                                                                       #       
+#: ExtComm         : ed                                                                       #
 # =========================================================================================== #
+
+# ******************************************************************************************** #
+#                                                                                              #
+#    Log everything to the desired log file. (NOTE: Builtins only on this part to be safe)     #
+#                                                                                              #
+# ******************************************************************************************** #
+
+Date=$(printf "[%(%h %d %Y %H:%M:%S)T]" -1)
+Log=$HOME/.HistLog
+
+exec > >(
+  while read -r line; do
+    echo "$Date $line" >> "$Log"
+  done
+) 2>&1
+
+# ******************************************************************************************** #
+#                                                                                              #
+#     Set the PATH just to be safe and cron will not complain about "command not found".       #
+#                                                                                              #
+# ******************************************************************************************** #
+
+PATH=/usr/local/bin:/usr/bin:/bin
+export PATH
 
 # ******************************************************************************************* #
 #                                                                                             #
@@ -29,7 +53,7 @@ printf -v Line '#%*s#' "$Length"
 #                                                                                             #
 # ******************************************************************************************* #
 
-printf '%s\n' "${Line// /=}" "Starting Histlog at <$(date)>"
+#printf '%s\n' "${Line// /=}" "Starting Histlog at <$(date)>"
 
 # ******************************************************************************************* #
 #                                                                                             #
@@ -74,7 +98,7 @@ if (( Total_Lines > 10000 )); then
   printf '%s\n' "You have reached 10000 lines limit, moving the rest to ${SourceFile}.archive."
   CutAndPaste
 else
-  printf '%s\n' "Your history is only [${Total_Lines}] lines. Keep it comming!"  
+  printf '%s\n' "Your history is only [${Total_Lines}] lines. Keep it comming!"
 fi
 
 # ******************************************************************************************* #
@@ -83,7 +107,7 @@ fi
 #                                                                                             #
 # ******************************************************************************************* #
 
-printf '%s\n' "Finishing HistLog at <$(date)>"
+#printf '%s\n' "Finishing HistLog at <$(date)>"
 
 # ******************************************************************************************* #
 #                                                                                             #
@@ -94,7 +118,7 @@ printf '%s\n' "Finishing HistLog at <$(date)>"
 exit 0
 
 # =========================================================================================== #
-#                                                                                             # 
+#                                                                                             #
 #                                    >>> END OF SCRIPT <<<                                    #
 #                                                                                             #
-# =========================================================================================== # 
+# =========================================================================================== #
