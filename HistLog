@@ -11,7 +11,7 @@
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.       #
 #: Options         : NONE                                                                      #
 #: Home Page       : NONE                                                                      #
-#: ExtComm         : ed,grep,wc                                                                #
+#: ExtComm         : cron,ed,grep,wc                                                           #
 # ============================================================================================ #
 
 # *********************************************************************************************#
@@ -80,7 +80,7 @@ done
 
 # ******************************************************************************************** #
 #                                                                                              #
-#          Check for the required app/executable is with in your PATH, exit otherwise.         #
+#    The value of the cron entry is within an array. (adjust to your own hearts content.)      #
 #                                                                                              #
 # ******************************************************************************************** #
 
