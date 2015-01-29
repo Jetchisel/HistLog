@@ -4,9 +4,9 @@
 #: Title           : HistLog                                                                   #
 #: Sypnosis        : HistLog                                                                   #
 #: Date Created    : Sun Jul 27 18:07:40 PHT 2014 / Sun Jul 27 10:08:00 UTC 2014               #
-#: Last Edit       : Thu Jan 29 13:11:01 PHT 2015 / Thu Jan 29 05:11:01 UTC 2015               #
+#: Last Edit       : Thu Jan 29 19:53:26 PHT 2015 / Thu Jan 29 11:53:26 UTC 2015               #
 #: License         : GPLv3                                                                     #
-#: Version         : 2.1.0                                                                     #
+#: Version         : 3.0.1                                                                     #
 #: Author          : Jason V. Ferrer '<jetchisel@opensuse.org>'                                #
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.       #
 #: Options         : NONE                                                                      #
@@ -80,6 +80,20 @@ done
 
 # ******************************************************************************************** #
 #                                                                                              #
+#          Check for the required app/executable is with in your PATH, exit otherwise.         #
+#                                                                                              #
+# ******************************************************************************************** #
+
+ArrayCrontabEntry=(
+  "* * * * * $BASH_SOURCE"
+  "* * * * * sleep 30; $BASH_SOURCE"
+)
+
+printf -v CronTabEntry '%s\n' "${ArrayCrontabEntry[@]}"
+CronTabEntry=${CronTabEntry%$'\n'}
+
+# ******************************************************************************************** #
+#                                                                                              #
 #      Make ed the default editor so "crontab -e" will accept ed syntax via a heredoc.         #
 #                                                                                              #
 # ******************************************************************************************** #
@@ -96,8 +110,7 @@ export EDITOR
 CreateEntry() {
 crontab -e << EOF
 a
-* * * * * $BASH_SOURCE
-* * * * * sleep 30; $BASH_SOURCE
+$CronTabEntry
 .
 w
 q
@@ -125,11 +138,13 @@ Archive=${HOME}/.bash_history.archive
 
 # ******************************************************************************************** #
 #                                                                                              #
-#                           Total lines of bash_history LogFile                                #
+#   Total lines of bash_history LogFile and the Maximum lines allowed before cut and paste.    #
 #                                                                                              #
 # ******************************************************************************************** #
 
-Total_Lines=$(wc -l < "$History")
+History_Lines=$(wc -l < "$History")
+Archive_Lines=$(wc -l < "$Archive")
+MaxLines=10000
 
 # ******************************************************************************************** #
 #                                                                                              #
@@ -159,15 +174,21 @@ EOF
 
 # ******************************************************************************************** #
 #                                                                                              #
-# If Total_lines is more than 10000, log to archive and delete the excess from SourceFile.     #
+# If Total_lines is more than 10000, paste to archive and delete the excess from SourceFile.   #
 #                                                                                              #
 # ******************************************************************************************** #
 
-if (( Total_Lines > 10000 )); then
-  printf '%s\n' "You have reached 10000 lines limit, moving the rest to ${SourceFile}.archive."
+if (( History_Lines > MaxLines )); then
+  History_Lines=$(wc -l < "$History")
+  Archive_Lines=$(wc -l < "$Archive")
+  printf '%s\n' "$History total lines: $History_Lines" "$Archive total lines: $Archive_Lines"
+  printf '%s\n' "Your history is now $History_Lines lines, moving the rest to $Archive"
   CutAndPaste
+  History_Lines=$(wc -l < "$History")
+  Archive_Lines=$(wc -l < "$Archive")
+  printf '%s\n' "$History total lines: $History_Lines" "$Archive total lines: $Archive_Lines"
 else
-  printf '%s\n' "Your history is only [${Total_Lines}] lines. Keep it comming!"
+  printf '%s\n' "Your history is only [${History_Lines}] lines. Keep it comming!"
 fi
 
 # ******************************************************************************************** #
