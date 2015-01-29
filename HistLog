@@ -129,12 +129,14 @@ fi
 
 # ******************************************************************************************** #
 #                                                                                              #
-#                   Define bash_history bash_history.archive log file.                         #
+#   Define bash_history bash_history.archive log file. If Archive does not exists create it.   #
 #                                                                                              #
 # ******************************************************************************************** #
 
 History=${HOME}/.bash_history
 Archive=${HOME}/.bash_history.archive
+
+[[ -s $Archive ]] || > "$Archive"
 
 # ******************************************************************************************** #
 #                                                                                              #
