@@ -22,13 +22,13 @@ Goal of HistLog:
 
 The value of Date which is
 ```shell
-'printf "[%(%h %d %Y %H:%M:%S)T]" -1'
+$(printf "[%(%h %d %Y %H:%M:%S)T]" -1)
 ```
 is a bash4 feature but you can replace it with the (GNU) date utility, something like
 ```shell
-date +['%h %d %Y %H:%M:%S']
+$(date +['%h %d %Y %H:%M:%S'])
 ```
-If your bash version is less than 4. See strftime (3) for a more control over the date format.
+If your bash version is less than 4. See **strftime** (3) for a more control over the date format.
 
 ## Required external utilities
     ed
@@ -58,8 +58,8 @@ Remove the second entry should you choose not to run it every 30 seconds.
    "* * * * * sleep 30; $BASH_SOURCE"
    )
 ```
-Change only this entry see, crontab(5).
-Don't forget to use double quotes.
+Change only this entry see, **crontab(5)**.
+Don't forget to use **double quotes** not single quotes.
 
 ```shell
 * * * * *
