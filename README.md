@@ -51,13 +51,15 @@ The script will run and will be called via cron every 30 seconds. ( at least on 
 The ~/.HistLog file will grow faster because it logs everything everytime. Adjust the time in the cron entry.
 
 This code contains the crontab entry.
+Remove the second entry should you choose not to run it every 30 seconds.
 ```shell
    ArrayCrontabEntry=(
    "* * * * * $BASH_SOURCE"
    "* * * * * sleep 30; $BASH_SOURCE"
    )
 ```
-Change on this entry see crontab(5)
+Change on this entry see, crontab(5).
+Don't forget to use double quotes.
 
 ```shell
 * * * * *
