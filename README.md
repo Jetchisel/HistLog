@@ -1,4 +1,4 @@
-# HistLog - A bash script that is called via cron that archives and save ~/.bash_history
+# HistLog - A bash script that archives and save ~/.bash_history
 
 https://github.com/Jetchisel/HistLog
 
@@ -37,12 +37,13 @@ If your bash version is less than 4. See **strftime** (3) for a more control ove
     wc
 
 ## Files created
-    "$HOME/.HistLog"
-    "${HOME}/.bash_history.archive" (*ONLY* if it does not exists.)
-
-     A crontab entry that looks like this (of course with the absolute path.)
-     * * * * * HistLog
-     * * * * * sleep 30; HistLog
+* "$HOME/.HistLog"
+* "${HOME}/.bash_history.archive" (*ONLY* if it does not exists.)
+*  A crontab entry that looks like this (of course with the absolute path.)
+```shell
+* * * * * HistLog
+* * * * * sleep 30; HistLog
+``
 
 ## Installation
 
@@ -59,10 +60,11 @@ Remove the second entry should you choose not to run it every 30 seconds.
    )
 ```
 Change only this entry see, **crontab(5)**.
-Don't forget to use **double quotes** not single quotes.
-
 ```shell
 * * * * *
 ```
+Don't forget to use **double quotes** not single quotes.
+
+
 
 Happy logging!
