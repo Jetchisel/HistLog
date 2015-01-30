@@ -11,7 +11,7 @@
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.       #
 #: Options         : NONE                                                                      #
 #: Home Page       : NONE                                                                      #
-#: ExtComm         : ed,grep,wc                                                                #
+#: ExtComm         : ed,crontab,grep,wc                                                        #
 # ============================================================================================ #
 
 # *********************************************************************************************#
@@ -65,7 +65,7 @@ export PATH
 # ******************************************************************************************** #
 
 Missing=()
-ExtComm=(ed cron grep wc)
+ExtComm=(ed crontab grep wc)
 MissingMessage="is either not installed or it is not in your PATH!"
 ExitMessage="Please install the following: "
 
