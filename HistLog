@@ -4,14 +4,14 @@
 #: Title           : HistLog                                                                   #
 #: Sypnosis        : HistLog                                                                   #
 #: Date Created    : Sun Jul 27 18:07:40 PHT 2014 / Sun Jul 27 10:08:00 UTC 2014               #
-#: Last Edit       : Fri Jan 30 07:07:02 PHT 2015 / Thu Jan 29 23:07:02 UTC 2015               #
+#: Last Edit       : Fri Jan 30 10:59:48 PHT 2015 / Fri Jan 30 02:59:48 UTC 2015               #
 #: License         : GPLv3                                                                     #
-#: Version         : 3.1.2                                                                     #
+#: Version         : 3.2.2                                                                     #
 #: Author          : Jason V. Ferrer '<jetchisel@opensuse.org>'                                #
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.       #
 #: Options         : NONE                                                                      #
 #: Home Page       : NONE                                                                      #
-#: ExtComm         : cron,ed,grep,wc                                                           #
+#: ExtComm         : ed,crontab,grep,wc                                                        #
 # ============================================================================================ #
 
 # *********************************************************************************************#
@@ -65,7 +65,7 @@ export PATH
 # ******************************************************************************************** #
 
 Missing=()
-ExtComm=(ed cron grep wc)
+ExtComm=(ed crontab grep wc)
 MissingMessage="is either not installed or it is not in your PATH!"
 ExitMessage="Please install the following: "
 
@@ -80,7 +80,7 @@ done
 
 # ******************************************************************************************** #
 #                                                                                              #
-#    The value of the cron entry is within an array. (adjust to your own hearts content.)      #
+#          Check for the required app/executable is with in your PATH, exit otherwise.         #
 #                                                                                              #
 # ******************************************************************************************** #
 
