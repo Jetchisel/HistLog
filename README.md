@@ -39,10 +39,11 @@ If your bash version is less than 4. See **strftime** (3) for a more control ove
 ## Files created
 "$HOME/.HistLog"
 "${HOME}/.bash_history.archive" (*ONLY* if it does not exists.)
-A crontab entry that looks like this (of course with the absolute path.)
->* * * * * HistLog
->* * * * * sleep 30; HistLog
-
+```shell
+## A crontab entry that looks like this (of course with the absolute path.)
+* * * * * HistLog
+* * * * * sleep 30; HistLog
+```
 ## Installation
 
 * Download an extract the archive and put the HistLog script somewhere within your PATH. Run it once and viola!
