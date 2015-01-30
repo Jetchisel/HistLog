@@ -46,12 +46,13 @@ If your bash version is less than 4. See **strftime** (3) for a more control ove
 * * * * * sleep 30; HistLog
 ``
 
-
 ## Installation
 
 * Download an extract the archive and put the HistLog script somewhere within your PATH. Run it once and viola!
 * The script will run and will be called via cron every 30 seconds. ( at least on this side it does. :-) )
 * The ~/.HistLog file will grow faster because it logs everything everytime. Adjust the time in the cron entry.
+
+## Cron entry
 
 This code contains the crontab entry.
 Remove the second entry should you choose not to run it every 30 seconds.
