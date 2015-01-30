@@ -40,10 +40,12 @@ If your bash version is less than 4. See **strftime** (3) for a more control ove
 * "$HOME/.HistLog"
 * "${HOME}/.bash_history.archive" (*ONLY* if it does not exists.)
 *  A crontab entry that looks like this (of course with the absolute path.)
+
 ```shell
 * * * * * HistLog
 * * * * * sleep 30; HistLog
 ``
+
 
 ## Installation
 
