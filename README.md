@@ -57,12 +57,11 @@ If your bash version is less than 4. See **strftime** (3) for a more control ove
 This code contains the crontab entry.
 Remove the second entry should you choose not to run it every 30 seconds.
 
-```shell
    ArrayCrontabEntry=(
    "* * * * * $BASH_SOURCE"
    "* * * * * sleep 30; $BASH_SOURCE"
    )
-```
+
 Change only this entry see, **crontab(5)**.
 ```shell
 * * * * *
