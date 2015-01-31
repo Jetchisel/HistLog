@@ -15,7 +15,7 @@ Goal of HistLog:
 * Make sure to adjust your history limit in ~/.bashrc.
 * Change the value of the variables of HistLog according to your own hearts content.
 * By default this script will run every 30 seconds being called via cron. (vixie-cron)
-* It is able to check and create a crontab entry for the user that is calling the script if it does not exists.
+* It is able to check and create a crontab entry for the user that is calling the script *ONLY* if it does not exists.
 * If bash_history is above 10,000 lines then 5,001 down to last is going to be removed and pasted at the end of archive.
 
 ## bash version required is 4 and up.
@@ -28,17 +28,18 @@ is a bash4 feature but you can replace it with the (GNU) date utility, something
 ```shell
 $(date +['%h %d %Y %H:%M:%S'])
 ```
-If your bash version is less than 4. See **strftime** (3) for a more control over the date format.
+If your bash version is less than 4.
+See **strftime** (3) for a more control over the date format.
 
 ## Required external utilities
     ed
-    cron
+    crontab
     grep
     wc
 
 ## Files created
 - "$HOME/.HistLog"
-- "${HOME}/.bash_history.archive" (*ONLY* if it does not exists.)
+- "$HOME/.bash_history.archive" (*ONLY* if it does not exists.)
 
 ```shell
 ## A crontab entry that looks like this (of course with the absolute path.)
@@ -61,11 +62,13 @@ Remove the second entry should you choose not to run it every 30 seconds.
    "* * * * * sleep 30; $BASH_SOURCE"
    )
 ```
-Change only this entry see, **crontab(5)**.
+Change only this entry,
 ```shell
 * * * * *
 ```
-Don't forget to use **double quotes** not single quotes.
+see **crontab(5)**.
+
+Don't forget to use **double quotes** not single quotes, other wise **$BASH_SOURCE** will not be expanded.
 
 
 
