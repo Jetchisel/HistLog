@@ -32,7 +32,7 @@ If your bash version is less than 4. See **strftime** (3) for a more control ove
 
 ## Required external utilities
     ed
-    cron
+    crontab
     grep
     wc
 
