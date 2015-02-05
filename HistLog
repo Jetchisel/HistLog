@@ -175,7 +175,7 @@ $CutLines,\$d
 w
 u
 1,${PasteLines}d
-. r $Archive
+.- r $Archive
 w $Archive
 EOF
 }
