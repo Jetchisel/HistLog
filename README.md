@@ -22,11 +22,11 @@ Goal of HistLog:
 
 The value of Date which is
 ```shell
-$(printf "[%(%h %d %Y %H:%M:%S)T]" -1)
+$(printf "%(%h %d %Y %H:%M:%S)T" -1)
 ```
 is a bash4 feature but you can replace it with the (GNU) date utility, something like
 ```shell
-$(date +['%h %d %Y %H:%M:%S'])
+$(date +'%h %d %Y %H:%M:%S')
 ```
 If your bash version is less than 4.
 See **strftime** (3) for a more control over the date format.
