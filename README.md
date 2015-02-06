@@ -16,7 +16,9 @@ Goal of HistLog:
 * Change the value of the variables of HistLog according to your own hearts content.
 * By default this script will run every 30 seconds being called via cron. (vixie-cron)
 * It is able to check and create a crontab entry for the user that is calling the script *ONLY* if it does not exists.
-* If bash_history is above 10,000 lines then 5,001 down to last is going to be removed and pasted at the end of archive.
+* If bash_history is above 10,000 lines:
+ - Lines from 1 to 5000 is going to be remove from bash_history
+ - Will be pasted at the start of bash_history.archive.
 
 ## bash version required is 4 and up.
 
