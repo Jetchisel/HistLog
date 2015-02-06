@@ -18,7 +18,7 @@ Goal of HistLog:
 * It is able to check and create a crontab entry for the user that is calling the script *ONLY* if it does not exists.
 * If bash_history is above 10,000 lines:
  - Lines from 1 to 5000 is going to be remove from bash_history
- - Will be pasted at the start of bash_history.archive.
+ - Will be pasted at the end of bash_history.archive.
 
 ## bash version required is 4 and up.
 
