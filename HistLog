@@ -4,9 +4,9 @@
 #: Title           : HistLog                                                                   #
 #: Sypnosis        : HistLog                                                                   #
 #: Date Created    : Sun Jul 27 18:07:40 PHT 2014 / Sun Jul 27 10:08:00 UTC 2014               #
-#: Last Edit       : Sat Feb  7 09:28:18 PHT 2015 / Sat Feb  7 01:28:18 UTC 2015               #
+#: Last Edit       : Sat Feb  7 12:15:05 PHT 2015 / Sat Feb  7 04:15:05 UTC 2015               #
 #: License         : GPLv3                                                                     #
-#: Version         : 3.2.8                                                                     #
+#: Version         : 3.2.9                                                                     #
 #: Author          : Jason V. Ferrer '<jetchisel@opensuse.org>'                                #
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.       #
 #: Options         : NONE                                                                      #
@@ -138,7 +138,7 @@ Archive=${HOME}/.bash_history.archive
 
 # ******************************************************************************************** #
 #                                                                                              #
-#      If bash_history.archive does not exists create it, otherwise exit with an error.        #
+#  If bash_history.archive does not exists silently create it, otherwise exit with an error.   #
 #                                                                                              #
 # ******************************************************************************************** #
 
@@ -146,8 +146,6 @@ if [[ ! -f $Archive ]]; then
   printf '%s\n' "Creating ${Archive}..."
   > "$Archive" || die "Could not create ${Archive}!"
   printf '%s\n' "$Archive created succesfully."
-else
-  printf '%s\n' "$Archive exists."
 fi
 
 # ******************************************************************************************** #
