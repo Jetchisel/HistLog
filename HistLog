@@ -4,13 +4,13 @@
 #: Title           : HistLog                                                                   #
 #: Sypnosis        : HistLog                                                                   #
 #: Date Created    : Sun Jul 27 18:07:40 PHT 2014 / Sun Jul 27 10:08:00 UTC 2014               #
-#: Last Edit       : Sun Feb  8 12:12:52 PHT 2015 / Sun Feb  8 04:12:52 UTC 2015               #
+#: Last Edit       : Sun Feb  8 20:29:20 PHT 2015 / Sun Feb  8 12:29:20 UTC 2015               #
 #: License         : GPLv3                                                                     #
-#: Version         : 3.2.10                                                                    #
+#: Version         : 3.2.10-every_minute                                                       #
 #: Author          : Jason V. Ferrer '<jetchisel@opensuse.org>'                                #
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.       #
 #: Options         : NONE                                                                      #
-#: Home Page       : NONE                                                                      #
+#: Home Page       : https://github.com/Jetchisel/HistLog                                      #
 #: ExtComm         : ed,crontab,grep,wc                                                        #
 # ============================================================================================ #
 
@@ -80,16 +80,14 @@ done
 
 # ******************************************************************************************** #
 #                                                                                              #
-#       Put the crontab entry in an array.  (to run every 30 seconds adjust if needed.)        #
+# Crontab entry in a variable (to run every minute) Adjust the value of TimeAndDate if needed. #
 #                                                                                              #
 # ******************************************************************************************** #
 
-ArrayCrontabEntry=(
-  "* * * * * $BASH_SOURCE"
-  "* * * * * sleep 30; $BASH_SOURCE"
-)
+Location=$BASH_SOURCE
+TimeAndDate="* * * * *"
 
-printf -v CronTabEntry '%s\n' "${ArrayCrontabEntry[@]}"
+printf -v CronTabEntry '%s %s\n' "$TimeAndDate" "$Location"
 CronTabEntry=${CronTabEntry%$'\n'}
 
 # ******************************************************************************************** #
