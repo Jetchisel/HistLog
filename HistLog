@@ -4,9 +4,9 @@
 #: Title           : HistLog                                                                   #
 #: Sypnosis        : HistLog                                                                   #
 #: Date Created    : Sun Jul 27 18:07:40 PHT 2014 / Sun Jul 27 10:08:00 UTC 2014               #
-#: Last Edit       : Sat Feb  7 12:15:05 PHT 2015 / Sat Feb  7 04:15:05 UTC 2015               #
+#: Last Edit       : Sun Feb  8 12:12:52 PHT 2015 / Sun Feb  8 04:12:52 UTC 2015               #
 #: License         : GPLv3                                                                     #
-#: Version         : 3.2.9                                                                     #
+#: Version         : 3.2.10                                                                    #
 #: Author          : Jason V. Ferrer '<jetchisel@opensuse.org>'                                #
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.       #
 #: Options         : NONE                                                                      #
@@ -14,11 +14,11 @@
 #: ExtComm         : ed,crontab,grep,wc                                                        #
 # ============================================================================================ #
 
-# *********************************************************************************************#
+# ******************************************************************************************** #
 #                                                                                              #
 #   Warn and die functions, for exit messages and default status or an optional exit status.   #
 #                                                                                              #
-# *********************************************************************************************#
+# ******************************************************************************************** #
 
 warn() {
   printf '%s\n' "${BASH_SOURCE##*/}: error: $*" >&2
@@ -44,8 +44,8 @@ Date=$(printf "%(%h %d %Y %H:%M:%S)T" -1)
 Log=$HOME/.HistLog
 
 exec > >(
-  while read -r line; do
-    printf '[%s] %s\n' "$Date" "$line" >> "$Log"
+  while read -r; do
+    printf '[%s] %s\n' "$Date" "$REPLY" >> "$Log"
   done
 ) 2>&1
 
@@ -66,21 +66,21 @@ export PATH
 
 Missing=()
 ExtComm=(ed crontab grep wc)
-MissingMessage="is either not installed or it is not in your PATH!"
 ExitMessage="Please install the following: "
+MissingMessage="is either not installed or it is not in your PATH!"
 
 for apps in "${ExtComm[@]}"; do
   if ! type -P "$apps" >/dev/null; then
-    echo "$apps $MissingMessage" >&2
+    printf '%s %s\n' "$apps" "$MissingMessage" >&2
     Missing+=("$apps")
   fi
 done
 
-(( ! ${#Missing[@]} )) || die "$ExitMessage[${Missing[*]}] exiting now!"
+(( ${#Missing[@]} )) && die "$ExitMessage[${Missing[*]}] exiting now!" 127
 
 # ******************************************************************************************** #
 #                                                                                              #
-#                            Put the crontab entry in an array.                                #
+#       Put the crontab entry in an array.  (to run every 30 seconds adjust if needed.)        #
 #                                                                                              #
 # ******************************************************************************************** #
 
@@ -103,7 +103,7 @@ export EDITOR
 
 # ******************************************************************************************** #
 #                                                                                              #
-#    Function to create an entry in cron (to run every 30 seconds) using ed and a heredoc.     #
+#                 Function to create an entry in cron using ed and a heredoc.                  #
 #                                                                                              #
 # ******************************************************************************************** #
 
@@ -119,7 +119,7 @@ EOF
 
 # ******************************************************************************************** #
 #                                                                                              #
-#                            Add cron entry if there is none.                                  #
+#                           Add cron entry *ONLY* if there is none.                            #
 #                                                                                              #
 # ******************************************************************************************** #
 
@@ -150,16 +150,6 @@ fi
 
 # ******************************************************************************************** #
 #                                                                                              #
-#   Total lines of bash_history LogFile and the Maximum lines allowed before cut and paste.    #
-#                                                                                              #
-# ******************************************************************************************** #
-
-History_Lines=$(wc -l < "$History")
-Archive_Lines=$(wc -l < "$Archive")
-MaxLines=10000
-
-# ******************************************************************************************** #
-#                                                                                              #
 #  lines to cut from history and lines to be pasted in archive. (Adjust the value if needed).  #
 #                                                                                              #
 # ******************************************************************************************** #
@@ -187,21 +177,38 @@ EOF
 
 # ******************************************************************************************** #
 #                                                                                              #
-# If Total_lines is more than 10000, paste to archive and delete the excess from SourceFile.   #
+#   Total lines of bash_history LogFile and the Maximum lines allowed before cut and paste.    #
+#                                                                                              #
+# ******************************************************************************************** #
+
+History_Lines=$(wc -l < "$History")
+MaxLines=10000
+
+# ******************************************************************************************** #
+#                                                                                              #
+#      Some fancy output in a variable, will be printed when MaxLines has been reached.        #
+#                                                                                              #
+# ******************************************************************************************** #
+
+length=14
+printf -v line '%*s' "$length"
+
+# ******************************************************************************************** #
+#                                                                                              #
+#  If Total_lines is more than 10000, move 5,000 to Archive and delete from from SourceFile.   #
 #                                                                                              #
 # ******************************************************************************************** #
 
 if (( History_Lines > MaxLines )); then
-  History_Lines=$(wc -l < "$History")
-  Archive_Lines=$(wc -l < "$Archive")
-  printf '%s\n' "$History total lines: $History_Lines" "$Archive total lines: $Archive_Lines"
-  printf '%s\n' "Your history is now $History_Lines lines, moving the rest to $Archive"
+  printf "%s\n" "${line// /=}>>> $History_Lines lines in $History Detected! <<<${line// /=}"
+  printf '%s\n' "$History Current number of lines: $(wc -l < "$History")"
+  printf '%s\n' "$Archive Current number of lines: $(wc -l < "$Archive")"
+  printf '%s\n' "History is now $History_Lines lines, moving ${CutLines#*,} lines to $Archive"
   CutAndPaste
-  History_Lines=$(wc -l < "$History")
-  Archive_Lines=$(wc -l < "$Archive")
-  printf '%s\n' "$History total lines: $History_Lines" "$Archive total lines: $Archive_Lines"
+  printf '%s\n' "$History After removing ${CutLines#*,} lines: $(wc -l < "$History")"
+  printf '%s\n' "$Archive After adding ${CutLines#*,} lines: $(wc -l < "$Archive")"
 else
-  printf '%s\n' "Your history is only [${History_Lines}] lines. Keep it comming!"
+  printf '%s\n' "Your history is only [$(wc -l < "$History")] lines. Keep it comming!"
 fi
 
 # ******************************************************************************************** #
