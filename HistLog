@@ -6,7 +6,7 @@
 #: Date Created    : Sun Jul 27 18:07:40 PHT 2014 / Sun Jul 27 10:08:00 UTC 2014               #
 #: Last Edit       : Sun Feb  8 20:29:20 PHT 2015 / Sun Feb  8 12:29:20 UTC 2015               #
 #: License         : GPLv3                                                                     #
-#: Version         : 3.2.10-every_minute                                                       #
+#: Version         : 3.2.11-every_minute                                                       #
 #: Author          : Jason V. Ferrer '<jetchisel@opensuse.org>'                                #
 #: Description     : Logs ~/.bash_history to ~/.bash_history.archive  after 10000 lines.       #
 #: Options         : NONE                                                                      #
@@ -136,7 +136,7 @@ Archive=${HOME}/.bash_history.archive
 
 # ******************************************************************************************** #
 #                                                                                              #
-#  If bash_history.archive does not exists silently create it, otherwise exit with an error.   #
+#       If bash_history.archive does not exists create it, otherwise exit with an error.       #
 #                                                                                              #
 # ******************************************************************************************** #
 

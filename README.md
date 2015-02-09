@@ -59,6 +59,7 @@ See **strftime(3)** for a more control over the date format.
 
 * Download and extract the archive and put the HistLog script somewhere within your PATH. Run it once and viola!
   - git clone https://github.com/Jetchisel/HistLog
+  - git checkout -b Everyminute remotes/origin/Everyminute
   - cd HistLog/
   - cp -v HistLog /bin
     * for single user you can put it in ~/bin
