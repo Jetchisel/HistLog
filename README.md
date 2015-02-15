@@ -7,7 +7,7 @@ Licensed under the GNU Affero General Public License, v3
 
 Goal of HistLog:
 
-  - Avoid loosing bash_history
+  - Avoid losing bash_history
     save the history to an archive.
 
 ## Note: Read everything before using this script.
